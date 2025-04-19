@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Sinonimi Interattivi (Hoepli)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .word {
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .word:hover {
+      background-color: #e0f7fa;
+    }
+  </style>
+</head>
+<body>
+  <h2>Testo Interattivo con Dizionario Hoepli</h2>
+  <p id="text"></p>
+
+  <script>
+    const text = `
+Tra le opere più significative del Medioevo cristiano si trova il Proslogion, scritto da Anselmo d'Aosta intorno al 1077.
+Questo testo breve nasce nel silenzio di un monastero, ma da secoli viene studiato per la sua forza logica e spirituale.
+Al suo centro si trova una riflessione sulla natura di Dio, che unisce la fiducia nella fede alla precisione del pensiero.
+`;
+    const textContainer = document.getElementById('text');
+
+    function renderText() {
+      const words = text.split(/(\s+|[,.])/);
+      words.forEach(word => {
+        const span = document.createElement('span');
+        span.textContent = word;
+        if (/^[\wàèéìòùÀÈÉÌÒÙ’']+$/.test(word)) {
+          span.className = 'word';
+          span.onclick = () => {
+            const base = word.toLowerCase().replace(/[’']/g, "");
+            window.open(`https://dizionari.corriere.it/dizionario_sinonimi_contrari/${base}`, '_blank');
+          };
+        }
+        textContainer.appendChild(span);
+      });
+    }
+
+    renderText();
+  </script>
+</body>
+</html>
